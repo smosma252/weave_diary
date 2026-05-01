@@ -1,388 +1,380 @@
-import DiaryDemo from './components/DiaryDemo';
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <>
-      <header className="sticky top-0 z-50 w-full px-6 pt-4">
-        <nav className="max-w-6xl mx-auto flex justify-between items-center px-8 py-3 bg-surface/40 backdrop-blur-xl border border-outline-variant/10 rounded-full shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]">
-          <div className="flex items-center gap-2 group cursor-pointer">
-            <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center">
-              <span className="material-symbols-outlined text-on-primary-container text-lg">auto_awesome</span>
-            </div>
-            <span className="text-xl font-headline-md italic text-primary tracking-tight group-hover:opacity-80 transition-opacity">
-              WeaveDiary
+      <NavBar />
+      <Hero />
+      <HowItWorks />
+      <Threads />
+      <Quote />
+      <CTA />
+      <Footer />
+    </>
+  );
+}
+
+function NavBar() {
+  return (
+    <nav
+      className="mk-nav"
+      style={{ height: 64, padding: "0 40px", display: "flex", alignItems: "center", gap: 28 }}
+    >
+      <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+        <Image src="/brand/logo-mark.svg" alt="" width={26} height={26} />
+        <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 600, fontSize: 22, color: "var(--fg-1)" }}>
+          WeaveDiary
+        </span>
+      </Link>
+      <div style={{ flex: 1 }} />
+      <a href="#how" style={navLink}>How it works</a>
+      <a href="#threads" style={navLink}>Threads</a>
+      <a href="#reports" style={navLink}>Reports</a>
+      <a href="#pricing" style={navLink}>Pricing</a>
+      <Link href="/dashboard" className="btn btn-secondary" style={{ marginLeft: 8 }}>
+        Sign in
+      </Link>
+      <a href="#cta" className="btn btn-primary">Begin weaving</a>
+    </nav>
+  );
+}
+
+const navLink: React.CSSProperties = {
+  color: "var(--fg-2)",
+  textDecoration: "none",
+  font: "var(--type-body)",
+  whiteSpace: "nowrap",
+};
+
+function Hero() {
+  return (
+    <section style={{ padding: "80px 40px 64px" }}>
+      <div
+        style={{
+          maxWidth: 1080,
+          margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: "1.1fr 1fr",
+          gap: 56,
+          alignItems: "center",
+        }}
+      >
+        <div>
+          <div className="eyebrow" style={{ marginBottom: 16 }}>A diary that writes itself</div>
+          <h1 className="h-display">
+            The week, woven from the threads of <em>your own life</em>.
+          </h1>
+          <p className="lede" style={{ marginTop: 24 }}>
+            WeaveDiary listens to the tools you already use — email, GitHub, Slack, Discord, your calendar — and
+            weaves them into a quiet, human diary, posted at the end of each day.
+          </p>
+          <div style={{ display: "flex", gap: 12, marginTop: 32 }}>
+            <a href="#cta" className="btn btn-primary" style={{ padding: "12px 22px", fontSize: 15 }}>
+              Begin weaving — free
+            </a>
+            <a href="#how" className="btn btn-secondary" style={{ padding: "12px 22px", fontSize: 15 }}>
+              See how it works
+            </a>
+          </div>
+          <p style={{ font: "var(--type-caption)", color: "var(--fg-3)", marginTop: 16 }}>
+            Free for thirty days · no card to start
+          </p>
+        </div>
+        <HeroVisual />
+      </div>
+    </section>
+  );
+}
+
+function HeroVisual() {
+  return (
+    <div style={{ position: "relative", height: 460 }}>
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "var(--bg-elevated)",
+          borderRadius: "var(--radius-lg)",
+          border: "1px solid var(--border)",
+          boxShadow: "var(--shadow-2)",
+          padding: "32px 36px",
+          overflow: "hidden",
+        }}
+      >
+        <div className="meta" style={{ margin: 0 }}>Thursday, 17 May · 6 threads</div>
+        <h3
+          style={{
+            font: "600 26px/1.2 var(--font-serif)",
+            letterSpacing: "-0.01em",
+            color: "var(--fg-1)",
+            marginTop: 6,
+          }}
+        >
+          A long afternoon
+        </h3>
+        <div style={{ font: "400 17px/1.6 var(--font-serif)", color: "var(--fg-1)", marginTop: 16, textWrap: "pretty" }}>
+          Thursday, the 17th — a quiet day with a long afternoon. The morning ran on email; by midday you&rsquo;d
+          cleared the inbox down to the last few stragglers and pushed the{" "}
+          <code
+            style={{
+              font: "var(--type-mono-sm)",
+              background: "var(--color-parchment-deep)",
+              padding: "1px 5px",
+              borderRadius: 3,
+            }}
+          >
+            inbox-zero
+          </code>{" "}
+          branch.
+          <br />
+          <br />
+          Sam called in the evening, briefly.{" "}
+          <em style={{ color: "var(--color-madder-deep)", fontStyle: "italic" }}>
+            You sounded warm when you spoke about the trip.
+          </em>{" "}
+          Bedtime was 11:38.
+        </div>
+        <div style={{ display: "flex", gap: 6, marginTop: 24, flexWrap: "wrap" }}>
+          {["github", "calendar", "voice", "email"].map((t, i) => (
+            <span key={t} className={"tag" + (i === 0 ? " acc" : "")}>
+              {t}
             </span>
-          </div>
-          <div className="hidden md:flex gap-10">
-            <a className="text-label-md uppercase tracking-widest text-primary hover:text-primary-fixed transition-colors duration-300" href="#">Features</a>
-            <a className="text-label-md uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Process</a>
-            <a className="text-label-md uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Pricing</a>
-            <a className="text-label-md uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Library</a>
-          </div>
-          <div className="flex items-center gap-4">
-            <button className="text-label-md uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors px-4">
-              Login
-            </button>
-            <button className="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label-md uppercase tracking-widest text-[11px] hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/10">
-              Begin Your Ritual
-            </button>
-          </div>
-        </nav>
-      </header>
+          ))}
+        </div>
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          left: -24,
+          top: 32,
+          background: "var(--color-ink)",
+          color: "var(--color-parchment-soft)",
+          padding: "10px 14px",
+          borderRadius: "var(--radius-sm)",
+          boxShadow: "var(--shadow-2)",
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          font: "var(--type-mono)",
+        }}
+      >
+        <span style={{ width: 6, height: 6, borderRadius: 999, background: "var(--color-madder)" }} />
+        new voice note · 9:42 PM
+      </div>
+    </div>
+  );
+}
 
-      <main className="max-w-7xl mx-auto px-8">
-        {/* Hero */}
-        <section className="py-20 lg:py-32 grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-variant/50 border border-outline-variant/30">
-              <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse"></span>
-              <span className="text-label-md font-label-md text-on-surface-variant uppercase tracking-widest">A New Ritual</span>
+function HowItWorks() {
+  const steps = [
+    {
+      n: "01",
+      t: "Connect your threads",
+      d: "Email, GitHub, Slack, Discord, calendar — link the tools you already use. Read-only, scoped, and revocable.",
+    },
+    {
+      n: "02",
+      t: "Live your week",
+      d: "WeaveDiary listens quietly in the background. Add a voice note when something's worth remembering.",
+    },
+    {
+      n: "03",
+      t: "Read your week",
+      d: "At the end of each day, an entry posts to your diary. At week's end, a gentle reflection of how things went.",
+    },
+  ];
+  return (
+    <section id="how" style={{ padding: "96px 40px", background: "var(--color-parchment-deep)" }}>
+      <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+        <div className="eyebrow" style={{ marginBottom: 16 }}>How it works</div>
+        <h2 className="h-section" style={{ marginBottom: 56, maxWidth: 700 }}>
+          Three quiet steps. Then it just keeps weaving.
+        </h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 32 }}>
+          {steps.map((s) => (
+            <div key={s.n}>
+              <div style={{ font: "var(--type-mono)", fontSize: 14, color: "var(--color-madder)", marginBottom: 14 }}>
+                — {s.n}
+              </div>
+              <h3 style={{ font: "600 24px/1.25 var(--font-serif)", color: "var(--fg-1)", marginBottom: 10 }}>{s.t}</h3>
+              <p style={{ font: "400 16px/1.55 var(--font-serif)", color: "var(--fg-2)", textWrap: "pretty" }}>{s.d}</p>
             </div>
-            <h1 className="font-headline-xl text-headline-xl text-on-background max-w-md leading-tight hover-refine-animation">
-              Where Digital Noise Becomes a{' '}
-              <span className="italic-accent italic text-amber-600 font-serif">Diary</span>.
-            </h1>
-            <p className="text-body-lg font-body-lg text-on-surface-variant max-w-lg">
-              Transform your chaotic digital footprint into a curated narrative. WeaveDiary weaves your
-              scattered notifications, meetings, and thoughts into an intentional daily journal.
-            </p>
-            <div className="flex gap-4 pt-4">
-              <button className="bg-amber-600 text-on-primary px-8 py-4 rounded-xl font-bold text-body-md hover:bg-amber-500 transition-all shadow-[0_0_20px_rgba(217,119,6,0.2)]">
-                Start Your Journal
-              </button>
-              <button className="border border-outline-variant text-on-background px-8 py-4 rounded-xl font-bold text-body-md hover:bg-surface-variant transition-all">
-                Watch the Ritual
-              </button>
-            </div>
-          </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-          <div className="relative group">
-            <div className="absolute -inset-10 bg-amber-600/5 rounded-[3rem] blur-3xl"></div>
-            <div className="relative flex flex-col gap-6 p-4">
-              {/* Top card */}
-              <div className="relative z-30 transform hover:-translate-y-2 transition-transform duration-500 bg-surface-container border border-outline-variant/30 rounded-2xl p-8 shadow-2xl grain">
-                <div className="flex justify-between items-start mb-6">
-                  <h3 className="font-headline-md text-on-surface">October 24, 2023</h3>
-                  <span className="px-3 py-1 rounded-full bg-secondary/10 border border-secondary/20 text-[10px] uppercase tracking-widest text-secondary">
-                    Reflective
-                  </span>
-                </div>
-                <p className="font-headline-md italic text-on-surface-variant leading-relaxed">
-                  &ldquo;The morning began with a flurry of creative momentum, eventually settling into a quiet
-                  rhythm as the rain tapped against the glass...&rdquo;
-                </p>
-                <div className="mt-8 pt-6 border-t border-outline-variant/10 flex items-center gap-4">
-                  <div className="flex -space-x-2">
-                    <div className="w-8 h-8 rounded-full border-2 border-surface bg-surface-variant flex items-center justify-center">
-                      <span className="material-symbols-outlined text-xs">mail</span>
-                    </div>
-                    <div className="w-8 h-8 rounded-full border-2 border-surface bg-surface-variant flex items-center justify-center">
-                      <span className="material-symbols-outlined text-xs">calendar_today</span>
-                    </div>
-                  </div>
-                  <span className="text-body-sm text-on-surface-variant/60 italic">Synthesized from 12 interactions</span>
-                </div>
-              </div>
-              {/* Mid card */}
-              <div className="absolute top-12 left-8 right-0 z-20 transform -rotate-2 bg-surface-container-low border border-outline-variant/20 rounded-2xl p-8 shadow-xl opacity-60">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="font-headline-md text-on-surface/40">October 23, 2023</h3>
-                  <span className="px-3 py-1 rounded-full bg-amber-600/5 border border-amber-600/10 text-[10px] uppercase tracking-widest text-amber-600/40">
-                    Productive
-                  </span>
-                </div>
-                <p className="font-headline-md italic text-on-surface-variant/40">
-                  &ldquo;A day defined by clarity. The chaos of previous weeks finally found its place in the grid...&rdquo;
-                </p>
-              </div>
-              {/* Deep card */}
-              <div className="absolute top-24 left-16 right-0 z-10 transform rotate-3 bg-surface-container-lowest border border-outline-variant/10 rounded-2xl p-8 shadow-lg opacity-30">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="font-headline-md text-on-surface/20">October 22, 2023</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Connected Ecosystem */}
-        <section className="py-24 relative overflow-hidden">
-          <div className="text-center space-y-4 mb-20">
-            <h2 className="font-headline-lg text-headline-lg text-on-background">Your Connected Ecosystem</h2>
-            <p className="text-body-md font-body-md text-on-surface-variant max-w-2xl mx-auto">
-              One central hub to calm the storm of integrations.
+function Threads() {
+  const threads: Array<[string, string]> = [
+    ["GitHub", "commits, PRs, issues"],
+    ["Slack", "channels you choose"],
+    ["Discord", "servers you choose"],
+    ["Calendar", "meetings, busy time"],
+    ["Email", "subjects only, never bodies"],
+    ["Voice", "your own notes"],
+  ];
+  return (
+    <section id="threads" style={{ padding: "96px 40px" }}>
+      <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 56, alignItems: "start" }}>
+          <div>
+            <div className="eyebrow" style={{ marginBottom: 16 }}>Threads</div>
+            <h2 className="h-section">Six threads in. One diary out.</h2>
+            <p className="lede" style={{ marginTop: 20 }}>
+              Each integration is a thread. WeaveDiary picks them up gently — read-only, the minimum it needs — and
+              weaves them into prose, never metrics.
             </p>
           </div>
-          <div className="relative max-w-4xl mx-auto aspect-square md:aspect-video flex items-center justify-center">
-            {/* Flow lines */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-20" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <line className="text-amber-600 animate-flow" stroke="currentColor" strokeWidth="0.2" x1="50" y1="50" x2="25" y2="15" />
-              <line className="text-amber-600 animate-flow" stroke="currentColor" strokeWidth="0.2" x1="50" y1="50" x2="66" y2="5" />
-              <line className="text-amber-600 animate-flow" stroke="currentColor" strokeWidth="0.2" x1="50" y1="50" x2="0"  y2="50" />
-              <line className="text-amber-600 animate-flow" stroke="currentColor" strokeWidth="0.2" x1="50" y1="50" x2="100" y2="50" />
-              <line className="text-amber-600 animate-flow" stroke="currentColor" strokeWidth="0.2" x1="50" y1="50" x2="75" y2="85" />
-            </svg>
-            {/* Central hub */}
-            <div className="z-10 w-32 h-32 rounded-full bg-amber-600/20 flex items-center justify-center border border-amber-600/50 cursor-pointer hover:scale-110 transition-transform duration-500 animate-hub-glow">
-              <div className="w-20 h-20 rounded-full bg-amber-600 flex items-center justify-center text-on-primary">
-                <span className="material-symbols-outlined text-4xl">auto_awesome</span>
-              </div>
-            </div>
-            <div className="absolute inset-0 border border-outline-variant/20 rounded-full animate-[spin_30s_linear_infinite]"></div>
-            <div className="absolute inset-16 border border-outline-variant/10 rounded-full animate-[spin_20s_linear_infinite_reverse]"></div>
-            <div className="absolute top-10 left-1/4 w-12 h-12 rounded-xl bg-surface-container border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-amber-500 hover:border-amber-500/50 transition-all animate-orbit-1">
-              <span className="material-symbols-outlined">mail</span>
-            </div>
-            <div className="absolute bottom-10 right-1/4 w-12 h-12 rounded-xl bg-surface-container border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-amber-500 hover:border-amber-500/50 transition-all animate-orbit-2">
-              <span className="material-symbols-outlined">calendar_today</span>
-            </div>
-            <div className="absolute top-1/2 -left-6 w-12 h-12 rounded-xl bg-surface-container border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-amber-500 hover:border-amber-500/50 transition-all animate-orbit-3">
-              <span className="material-symbols-outlined">chat_bubble</span>
-            </div>
-            <div className="absolute top-1/2 -right-6 w-12 h-12 rounded-xl bg-surface-container border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-amber-500 hover:border-amber-500/50 transition-all animate-orbit-4">
-              <span className="material-symbols-outlined">task_alt</span>
-            </div>
-            <div className="absolute top-0 right-1/3 w-12 h-12 rounded-xl bg-surface-container border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-amber-500 hover:border-amber-500/50 transition-all animate-orbit-5">
-              <span className="material-symbols-outlined">music_note</span>
-            </div>
-          </div>
-        </section>
-
-        {/* Features bento grid */}
-        <section className="py-24">
-          <div className="grid md:grid-cols-12 grid-rows-2 gap-6 min-h-[600px]">
-            <div className="md:col-span-8 bg-surface-container-low p-10 rounded-2xl border border-outline-variant/20 flex flex-col justify-between grain">
-              <div className="max-w-md space-y-4">
-                <span className="material-symbols-outlined text-amber-600 text-3xl">edit_note</span>
-                <h3 className="font-headline-md text-headline-md text-on-background">Guided Intentions</h3>
-                <p className="text-body-md font-body-md text-on-surface-variant">
-                  WeaveDiary doesn&apos;t just record; it guides. Use thoughtful prompts to unravel your day and
-                  find the clarity hidden beneath the noise.
-                </p>
-              </div>
-              <div className="mt-12 overflow-hidden rounded-xl border border-outline-variant/10">
-                <div className="bg-surface-dim p-4 flex gap-4 overflow-x-auto no-scrollbar">
-                  <div className="flex-shrink-0 w-48 p-4 rounded-lg bg-surface-container border border-amber-600/20 prompt-card-pulse">
-                    <p className="text-label-md text-amber-600 mb-2 uppercase">Morning</p>
-                    <p className="text-body-sm text-on-surface">What is your one focus today?</p>
-                  </div>
-                  <div className="flex-shrink-0 w-48 p-4 rounded-lg bg-surface-container border border-outline-variant/20 prompt-card-pulse">
-                    <p className="text-label-md text-on-surface-variant mb-2 uppercase">Reflection</p>
-                    <p className="text-body-sm text-on-surface">What did you learn today?</p>
-                  </div>
-                  <div className="flex-shrink-0 w-48 p-4 rounded-lg bg-surface-container border border-outline-variant/20 prompt-card-pulse">
-                    <p className="text-label-md text-on-surface-variant mb-2 uppercase">Gratitude</p>
-                    <p className="text-body-sm text-on-surface">One small victory...</p>
-                  </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+            {threads.map(([n, sub]) => (
+              <div
+                key={n}
+                style={{
+                  background: "var(--bg-elevated)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "var(--radius-md)",
+                  padding: "16px 18px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 14,
+                }}
+              >
+                <div
+                  style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: 8,
+                    background: "var(--color-ink)",
+                    color: "var(--color-parchment-soft)",
+                    display: "grid",
+                    placeItems: "center",
+                    fontFamily: "var(--font-serif)",
+                    fontWeight: 600,
+                    flex: "none",
+                  }}
+                >
+                  {n[0]}
                 </div>
-              </div>
-            </div>
-
-            <div className="md:col-span-4 bg-surface-container p-10 rounded-2xl border border-outline-variant/20 flex flex-col items-center justify-center text-center space-y-6">
-              <div className="w-16 h-16 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary sync-icon-breathe">
-                <span className="material-symbols-outlined text-3xl">nest_eco_leaf</span>
-              </div>
-              <h3 className="font-headline-md text-headline-md text-on-background">Silent Sync</h3>
-              <p className="text-body-sm font-body-sm text-on-surface-variant">
-                We bridge your apps without the interruptions. Background sync keeps your diary updated while
-                you stay focused.
-              </p>
-            </div>
-
-            <div className="md:col-span-4 relative group rounded-2xl overflow-hidden border border-outline-variant/20">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                className="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:opacity-60 group-hover:grayscale-0 transition-all duration-700"
-                alt="A macro photography shot of an old fountain pen resting on a thick, cream-colored paper journal with amber ink."
-                src="https://lh3.googleusercontent.com/aida/ADBb0ugcQlngGlYP4hJo138XFbfGfxlb0Ujg184T432QMMgwHAi-BPnJVhfuDV4DOZGuuwxGY3hlKbCCkMQSCNtlxYSz6DuiKy_OlU-VPL9ySmzkNx57qvZeo4d2OQm7TluiZGOk3X9BDnXN5pIZG2SdXdJ5ta_0HSn8ldfnoV737ZBXn_o_OtcAVkzTrzmGbjMSVFD84OwG6TqdpGY1XZIkq49Co6h13JnpkKoeW0bjl_geYxpBPY-7aHSzJdCkYg92RWNjaYsKMOxB"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-surface-dim via-transparent to-transparent"></div>
-              <div className="absolute bottom-0 p-10">
-                <h3 className="font-headline-md text-headline-md text-on-background">Analog Soul</h3>
-                <p className="text-body-sm font-body-sm text-on-surface-variant">
-                  A digital experience that honors the tactile feel of traditional journaling.
-                </p>
-              </div>
-            </div>
-
-            <div className="md:col-span-8 bg-surface-container-low p-10 rounded-2xl border border-outline-variant/20 flex items-center gap-12 grain mood-board-container">
-              <div className="flex-1 space-y-4">
-                <h3 className="font-headline-md text-headline-md text-on-background">The Mood Board</h3>
-                <p className="text-body-md font-body-md text-on-surface-variant">
-                  Pin inspiration, voice memos, and photos. Our asymmetrical layout lets your thoughts breathe
-                  and overlap naturally.
-                </p>
-              </div>
-              <div className="flex-1 hidden sm:flex justify-end">
-                <div className="relative w-48 h-48">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-surface-container-highest rounded-lg shadow-lg rotate-6 border border-outline-variant/20 mood-board-card card-1"></div>
-                  <div className="absolute bottom-4 left-0 w-32 h-32 bg-surface-variant rounded-lg shadow-lg -rotate-12 border border-outline-variant/20 flex items-center justify-center mood-board-card card-2">
-                    <span className="material-symbols-outlined text-amber-600/50 text-4xl">photo_library</span>
-                  </div>
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-24 bg-surface-container-high rounded-lg shadow-xl border border-amber-600/30 flex flex-col p-3 gap-2 mood-board-card card-3">
-                    <div className="w-full h-1 bg-amber-600/20 rounded-full"></div>
-                    <div className="w-2/3 h-1 bg-amber-600/20 rounded-full"></div>
-                    <div className="w-4/5 h-1 bg-amber-600/20 rounded-full"></div>
-                  </div>
+                <div>
+                  <div style={{ font: "var(--type-body)", fontWeight: 500, color: "var(--fg-1)" }}>{n}</div>
+                  <div style={{ font: "var(--type-caption)", color: "var(--fg-3)" }}>{sub}</div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Use Cases */}
-        <section className="py-24">
-          <div className="space-y-6 mb-16">
-            <h2 className="font-headline-lg text-headline-lg text-primary">Use Cases</h2>
-            <p className="text-body-md text-on-surface-variant max-w-2xl">
-              You already use apps that track what you watch, listen to, play, and share. WeaveDiary turns that
-              activity into a diary, automatically.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-surface-container p-8 rounded-2xl border border-outline-variant/20 relative group hover:border-amber-600/30 transition-all duration-500">
-              <div className="w-12 h-1 bg-amber-600/60 rounded-full mb-8"></div>
-              <h3 className="font-headline-md text-on-surface mb-4">Entertainment Diary</h3>
-              <p className="text-body-sm text-on-surface-variant mb-8">Your entertainment life, automatically preserved.</p>
-              <div className="flex gap-4 text-on-surface-variant/40 mb-12">
-                <span className="material-symbols-outlined text-xl">play_circle</span>
-                <span className="material-symbols-outlined text-xl">music_note</span>
-                <span className="material-symbols-outlined text-xl">sports_esports</span>
-              </div>
-              <div className="flex items-center gap-2 text-amber-600 group-hover:gap-4 transition-all">
-                <span className="text-label-md uppercase tracking-widest">Explore</span>
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </div>
-            </div>
-
-            <div className="bg-surface-container p-8 rounded-2xl border border-outline-variant/20 relative group hover:border-teal-500/30 transition-all duration-500">
-              <div className="w-12 h-1 bg-teal-500/60 rounded-full mb-8"></div>
-              <h3 className="font-headline-md text-on-surface mb-4">Travel Diary</h3>
-              <p className="text-body-sm text-on-surface-variant mb-8">Every trip written down before your flight home lands.</p>
-              <div className="flex gap-4 text-on-surface-variant/40 mb-12">
-                <span className="material-symbols-outlined text-xl">flight</span>
-                <span className="material-symbols-outlined text-xl">map</span>
-                <span className="material-symbols-outlined text-xl">photo_camera</span>
-              </div>
-              <div className="flex items-center gap-2 text-teal-500 group-hover:gap-4 transition-all">
-                <span className="text-label-md uppercase tracking-widest">Explore</span>
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </div>
-            </div>
-
-            <div className="bg-surface-container p-8 rounded-2xl border border-outline-variant/20 relative group hover:border-yellow-500/30 transition-all duration-500">
-              <div className="w-12 h-1 bg-yellow-500/60 rounded-full mb-8"></div>
-              <h3 className="font-headline-md text-on-surface mb-4">Developer Diary</h3>
-              <p className="text-body-sm text-on-surface-variant mb-8">Your work, written up before the next standup starts.</p>
-              <div className="flex gap-4 text-on-surface-variant/40 mb-12">
-                <span className="material-symbols-outlined text-xl">code</span>
-                <span className="material-symbols-outlined text-xl">terminal</span>
-                <span className="material-symbols-outlined text-xl">integration_instructions</span>
-              </div>
-              <div className="flex items-center gap-2 text-yellow-500 group-hover:gap-4 transition-all">
-                <span className="text-label-md uppercase tracking-widest">Explore</span>
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Interactive Diary Demo */}
-        <DiaryDemo />
-
-        {/* CTA */}
-        <section className="py-24 text-center">
-          <div className="bg-surface-container py-20 px-8 rounded-3xl border border-outline-variant/10 relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-8 text-amber-600/5 select-none font-serif italic text-9xl">
-              Pause
-            </div>
-            <div className="relative z-10 max-w-2xl mx-auto space-y-8">
-              <h2 className="font-headline-xl text-headline-xl text-on-background">Ready to find your focus?</h2>
-              <p className="text-body-lg font-body-lg text-on-surface-variant italic">
-                &ldquo;Sometimes the most productive thing you can do is breathe and write.&rdquo;
-              </p>
-              <button className="bg-primary-container text-on-primary-container px-10 py-5 rounded-full font-bold text-body-lg hover:scale-105 transition-transform shadow-[0_10px_30px_rgba(217,119,6,0.3)]">
-                Begin Your Ritual
-              </button>
-              <p className="text-label-md font-label-md text-on-surface-variant uppercase tracking-widest">
-                Join 5,000+ intentional minds
-              </p>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer className="w-full py-24 px-8 mt-12 bg-gradient-to-b from-background to-surface-container-lowest">
-        <div className="max-w-6xl mx-auto">
-          {/* Trust strip */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-24 py-12 border-y border-outline-variant/10">
-            {[
-              { icon: 'lock',     title: 'Encrypted',    sub: 'TLS 1.3 & AES-256' },
-              { icon: 'block',    title: 'No AI Training', sub: 'Your data is private' },
-              { icon: 'download', title: 'Export Anytime', sub: 'Markdown + YAML' },
-              { icon: 'gpp_good', title: 'Compliant',    sub: 'GDPR & CCPA' },
-              { icon: 'cloud',    title: 'Google Cloud', sub: 'Enterprise Security' },
-              { icon: 'code',     title: 'Minimal LLM',  sub: 'Activity data only' },
-            ].map(({ icon, title, sub }) => (
-              <div key={title} className="space-y-3">
-                <span className="material-symbols-outlined text-teal-500">{icon}</span>
-                <h5 className="text-label-md font-bold text-on-surface">{title}</h5>
-                <p className="text-[10px] text-on-surface-variant uppercase">{sub}</p>
               </div>
             ))}
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 items-start">
-            <div className="md:col-span-1 space-y-6">
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
-                  <div className="w-2 h-2 rounded-full bg-primary"></div>
-                </div>
-                <span className="text-xl font-headline-md italic text-primary">WeaveDiary</span>
-              </div>
-              <p className="text-body-sm text-on-surface-variant max-w-[240px]">
-                Curating digital chaos into intentional narratives for the mindful professional.
-              </p>
-            </div>
-            <div className="space-y-4">
-              <h4 className="text-label-md uppercase tracking-widest text-on-surface">Experience</h4>
-              <nav className="flex flex-col gap-3">
-                <a className="text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Digital Garden</a>
-                <a className="text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Analog Rituals</a>
-                <a className="text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Case Studies</a>
-              </nav>
-            </div>
-            <div className="space-y-4">
-              <h4 className="text-label-md uppercase tracking-widest text-on-surface">Sanctuary</h4>
-              <nav className="flex flex-col gap-3">
-                <a className="text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy First</a>
-                <a className="text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Peace</a>
-                <a className="text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Support Hub</a>
-              </nav>
-            </div>
-            <div className="space-y-6">
-              <h4 className="text-label-md uppercase tracking-widest text-on-surface">Stay Present</h4>
-              <div className="flex gap-4">
-                <a className="w-10 h-10 rounded-full border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:border-primary hover:text-primary transition-all" href="#">
-                  <span className="material-symbols-outlined text-xl">share</span>
-                </a>
-                <a className="w-10 h-10 rounded-full border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:border-primary hover:text-primary transition-all" href="#">
-                  <span className="material-symbols-outlined text-xl">podcasts</span>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="mt-20 pt-8 border-t border-outline-variant/5 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-label-md text-on-surface-variant/60">
-              &copy; 2024 WeaveDiary. All rights reserved.
-            </p>
-            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-variant/30 border border-outline-variant/10">
-              <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
-              <span className="text-[10px] uppercase tracking-widest text-on-surface-variant">System Status: Serene</span>
-            </div>
-          </div>
         </div>
-      </footer>
-    </>
+      </div>
+    </section>
+  );
+}
+
+function Quote() {
+  return (
+    <section
+      style={{
+        padding: "96px 40px",
+        background: "var(--color-ink)",
+        color: "var(--color-parchment-soft)",
+      }}
+    >
+      <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+        <Image
+          src="/brand/icon-thread.svg"
+          alt=""
+          width={56}
+          height={56}
+          style={{ marginBottom: 24, opacity: 0.9 }}
+        />
+        <p
+          style={{
+            font: "400 36px/1.3 var(--font-serif)",
+            fontStyle: "italic",
+            letterSpacing: "-0.01em",
+            textWrap: "balance",
+          }}
+        >
+          &ldquo;It&rsquo;s the first journal that didn&rsquo;t feel like homework. I open it on Sundays the way
+          I&rsquo;d open a letter.&rdquo;
+        </p>
+        <div
+          style={{
+            marginTop: 28,
+            font: "var(--type-meta)",
+            textTransform: "uppercase",
+            letterSpacing: "var(--tracking-meta)",
+            color: "var(--color-loom-soft)",
+          }}
+        >
+          Maya R · designer · using WeaveDiary for 7 months
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CTA() {
+  return (
+    <section id="cta" style={{ padding: "96px 40px 120px" }}>
+      <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+        <h2 className="h-section" style={{ marginBottom: 18 }}>
+          Begin weaving — it&rsquo;s free for thirty days.
+        </h2>
+        <p className="lede" style={{ margin: "0 auto 32px" }}>
+          Connect a thread or two, leave a voice note tonight, and read your first entry tomorrow morning.
+        </p>
+        <form style={{ display: "flex", gap: 8, maxWidth: 460, margin: "0 auto" }}>
+          <input
+            type="email"
+            placeholder="you@somewhere.com"
+            style={{
+              flex: 1,
+              font: "var(--type-body)",
+              padding: "12px 14px",
+              border: "1px solid var(--border-strong)",
+              background: "var(--bg-elevated)",
+              borderRadius: "var(--radius-sm)",
+              color: "var(--fg-1)",
+            }}
+          />
+          <button type="submit" className="btn btn-primary" style={{ padding: "12px 20px" }}>
+            Begin weaving
+          </button>
+        </form>
+        <p style={{ font: "var(--type-caption)", color: "var(--fg-3)", marginTop: 14 }}>
+          No card · cancel anytime · your threads stay yours
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer style={{ borderTop: "1px solid var(--border-hairline)", padding: "40px 40px 56px" }}>
+      <div
+        style={{
+          maxWidth: 1080,
+          margin: "0 auto",
+          display: "flex",
+          alignItems: "center",
+          gap: 24,
+          flexWrap: "wrap",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <Image src="/brand/logo-mark.svg" alt="" width={22} height={22} />
+          <span style={{ font: "italic 600 16px var(--font-serif)" }}>WeaveDiary</span>
+        </div>
+        <span style={{ font: "var(--type-caption)", color: "var(--fg-3)" }}>© 2026 · Made quietly</span>
+        <div style={{ marginLeft: "auto", display: "flex", gap: 22 }}>
+          <a href="#" style={{ font: "var(--type-body-sm)", color: "var(--fg-2)", textDecoration: "none" }}>Privacy</a>
+          <a href="#" style={{ font: "var(--type-body-sm)", color: "var(--fg-2)", textDecoration: "none" }}>Terms</a>
+          <a href="#" style={{ font: "var(--type-body-sm)", color: "var(--fg-2)", textDecoration: "none" }}>Changelog</a>
+        </div>
+      </div>
+    </footer>
   );
 }

@@ -8,14 +8,13 @@ WeaveDiary is an AI-powered personal diary that auto-generates daily entries by 
 
 ## Current State
 
-Frontend-only landing page is built. No backend or API integrations exist yet. The UI is being redesigned — a new design system will be imported (replacing the current one) before further UI work continues.
+Frontend landing page and an in-app dashboard mock are built. No backend or API integrations exist yet.
 
 ### Tech Stack
 
 - **Framework**: Next.js 16 (App Router), React 19, TypeScript 5 (strict)
-- **Styling**: Tailwind CSS 4 via `@tailwindcss/postcss` — uses CSS `@theme` variables, not `tailwind.config.js`
-- **Icons**: Material Symbols Outlined via Google Fonts CDN
-- **Fonts**: Newsreader (serif, diary prose + display), Manrope (sans, UI chrome) via `next/font/google`
+- **Styling**: Tailwind CSS 4 via `@tailwindcss/postcss` — uses CSS `@theme` variables. Most styling is via design tokens (CSS custom properties) and component classes in `globals.css`, not Tailwind utilities.
+- **Fonts**: Lora (serif, editorial + diary), Inter Tight (sans, UI), JetBrains Mono (metadata) via `next/font/google`. Wired to `--font-lora`, `--font-inter-tight`, `--font-jetbrains-mono` CSS variables.
 
 ### Commands (run from `app/`)
 
@@ -29,21 +28,27 @@ npm run lint     # ESLint
 
 ```
 app/
-├── layout.tsx         # root layout — fonts, icon CDN, dark class, dot-grid bg
-├── page.tsx           # landing page (hero, ecosystem, bento, demo, footer)
-├── globals.css        # Tailwind theme vars, utility classes, all animations
-└── components/
-    └── DiaryDemo.tsx  # tabbed Log/Story/Ad-lib demo with scroll-reveal
+├── layout.tsx              # root layout — next/font wiring only
+├── page.tsx                # marketing landing page (Nav, Hero, HowItWorks, Threads, Quote, CTA, Footer)
+├── globals.css             # design tokens, base resets, component classes (.btn, .wd-card, .wd-app, …)
+└── dashboard/
+    └── page.tsx            # client-side dashboard (Sidebar, Topbar, Today/Diary/Reports/Threads, VoiceCapture)
+
+public/brand/               # logo marks, thread/skein icons, paper-grain SVG
 ```
 
-### Design System (see `DESIGN.md`)
+### Design System ("paper, ink, and a single woven thread")
 
-- **Colors**: Hearthlight amber `#ffb77d` (primary), Growth green `#a0d663`, Burnished gold `#f7be1d`, 6 neutral steps (Void → Raised)
-- **Elevation**: Tonal only — no drop shadows
-- **Animations**: CSS scroll-driven (`animation-timeline: view()`) — no JS animation libraries
-- **Background**: `.dot-grid` (radial gradient), `.grain` (texture overlay)
-- **Buttons**: Pill/feature-rounded; no sharp corners
-- **Rule**: 10% Hearthlight rule — warm amber tint appears on every surface
+- **Brand essence**: warm, literary, quietly intelligent. Paper-feel, not SaaS. No emoji, no exclamations. Sentence case everywhere.
+- **Surfaces**: warm parchment family — `--color-parchment` (#F4EFE6) base, `--color-parchment-soft` elevated, `--color-parchment-deep` sunken.
+- **Text**: warm near-blacks — `--color-ink` (#1F1B16), with `--fg-2`/`--fg-3` for secondary/tertiary.
+- **Accent**: madder red `#A23E2C` ("the thread") — used sparingly for emphasis, links, brand mark. Plus ochre and sage.
+- **Type**: serif (Lora) for display + diary prose, sans (Inter Tight) for UI chrome, mono (JetBrains Mono) for metadata. Use `var(--type-h1)`, `var(--type-prose)`, `var(--type-meta)` etc. shorthand fonts.
+- **Radii**: 6px buttons/inputs, 10px cards, 16px large surfaces. Pill only for tags.
+- **Elevation**: warm paper-soft shadows via `var(--shadow-1)` / `var(--shadow-2)`. No glassmorphism, no purple/blue gradients.
+- **Motion**: 220ms `cubic-bezier(0.22, 0.61, 0.36, 1)`. No bounce, no scale, no parallax.
+
+The full design source kit lives outside the repo (in the user's Downloads folder). Tokens were ported into `globals.css`; reference component classes there before adding new utility-laden markup.
 
 ### Environment Variables
 

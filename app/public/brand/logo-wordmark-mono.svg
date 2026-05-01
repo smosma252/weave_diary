@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 64" fill="none">
+  <g fill="#09090B">
+    <rect x="0" y="8" width="3" height="48"></rect>
+    <rect x="7" y="8" width="2" height="48"></rect>
+    <rect x="13" y="8" width="4" height="48"></rect>
+    <rect x="21" y="8" width="2" height="48"></rect>
+    <rect x="27" y="8" width="3" height="48"></rect>
+    <rect x="34" y="8" width="2" height="48"></rect>
+    <rect x="40" y="8" width="5" height="48"></rect>
+  </g>
+  <text x="60" y="44" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="32" letter-spacing="-1.2" fill="#09090B">WeaveDiary</text>
+</svg>
