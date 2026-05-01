@@ -8,11 +8,46 @@ WeaveDiary is an AI-powered personal diary that auto-generates daily entries by 
 
 ## Current State
 
-Early development — only a README exists. No tech stack has been committed to yet. When adding the first code, update this file with:
-- Build, lint, and test commands
-- Chosen framework/language decisions
-- Database schema overview
-- Environment variable requirements
+Frontend-only landing page is built. No backend or API integrations exist yet. The UI is being redesigned — a new design system will be imported (replacing the current one) before further UI work continues.
+
+### Tech Stack
+
+- **Framework**: Next.js 16 (App Router), React 19, TypeScript 5 (strict)
+- **Styling**: Tailwind CSS 4 via `@tailwindcss/postcss` — uses CSS `@theme` variables, not `tailwind.config.js`
+- **Icons**: Material Symbols Outlined via Google Fonts CDN
+- **Fonts**: Newsreader (serif, diary prose + display), Manrope (sans, UI chrome) via `next/font/google`
+
+### Commands (run from `app/`)
+
+```bash
+npm run dev      # start dev server on localhost:3000
+npm run build    # production build
+npm run lint     # ESLint
+```
+
+### Source Structure (`app/app/`)
+
+```
+app/
+├── layout.tsx         # root layout — fonts, icon CDN, dark class, dot-grid bg
+├── page.tsx           # landing page (hero, ecosystem, bento, demo, footer)
+├── globals.css        # Tailwind theme vars, utility classes, all animations
+└── components/
+    └── DiaryDemo.tsx  # tabbed Log/Story/Ad-lib demo with scroll-reveal
+```
+
+### Design System (see `DESIGN.md`)
+
+- **Colors**: Hearthlight amber `#ffb77d` (primary), Growth green `#a0d663`, Burnished gold `#f7be1d`, 6 neutral steps (Void → Raised)
+- **Elevation**: Tonal only — no drop shadows
+- **Animations**: CSS scroll-driven (`animation-timeline: view()`) — no JS animation libraries
+- **Background**: `.dot-grid` (radial gradient), `.grain` (texture overlay)
+- **Buttons**: Pill/feature-rounded; no sharp corners
+- **Rule**: 10% Hearthlight rule — warm amber tint appears on every surface
+
+### Environment Variables
+
+None yet. Will be required when OAuth integrations and Claude API are wired up.
 
 ## Planned Architecture (from README)
 
