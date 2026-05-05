@@ -9,7 +9,7 @@
 /dashboard/diary/[entryId]          → single entry reading view
 /dashboard/reports                  → report history list (weekly/monthly toggle)
 /dashboard/reports/weekly/[weekId]  → specific weekly report
-/dashboard/reports/monthly/monthId] → specific monthly report
+/dashboard/reports/monthly/[monthId] → specific monthly report
 /dashboard/goals                    → goal list + create/edit
 /dashboard/threads                  → connected integrations panel
 /dashboard/ask                      → conversational debrief (chat UI)

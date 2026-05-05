@@ -9,7 +9,8 @@
       "Bash(npx --no next dev --port 3000)",
       "WebFetch(domain:api.anthropic.com)",
       "Read(//tmp/**)",
-      "Bash(find /tmp/design-pkg -type f -name \"*.md\" -o -name \"*.css\")"
+      "Bash(find /tmp/design-pkg -type f -name \"*.md\" -o -name \"*.css\")",
+      "Bash(npm run *)"
     ]
   }
 }
