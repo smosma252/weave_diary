@@ -4,7 +4,12 @@
       "Bash(node \".claude/skills/impeccable/scripts/live-poll.mjs\")",
       "Bash(node \".claude/skills/impeccable/scripts/live-server.mjs\" stop)",
       "Bash(node \".claude/skills/impeccable/scripts/load-context.mjs\")",
-      "Bash(node .claude/skills/impeccable/scripts/load-context.mjs)"
+      "Bash(node .claude/skills/impeccable/scripts/load-context.mjs)",
+      "Bash(node *)",
+      "Bash(npx --no next dev --port 3000)",
+      "WebFetch(domain:api.anthropic.com)",
+      "Read(//tmp/**)",
+      "Bash(find /tmp/design-pkg -type f -name \"*.md\" -o -name \"*.css\")"
     ]
   }
 }

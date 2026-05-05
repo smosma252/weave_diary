@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import Demo from "./_components/Demo";
 
 export default function Home() {
   return (
@@ -8,7 +9,9 @@ export default function Home() {
       <Hero />
       <HowItWorks />
       <Threads />
+      <Demo />
       <Quote />
+      <Pricing />
       <CTA />
       <Footer />
     </>
@@ -30,7 +33,7 @@ function NavBar() {
       <div style={{ flex: 1 }} />
       <a href="#how" style={navLink}>How it works</a>
       <a href="#threads" style={navLink}>Threads</a>
-      <a href="#reports" style={navLink}>Reports</a>
+      <a href="#demo" style={navLink}>Try it</a>
       <a href="#pricing" style={navLink}>Pricing</a>
       <Link href="/dashboard" className="btn btn-secondary" style={{ marginLeft: 8 }}>
         Sign in
@@ -89,7 +92,7 @@ function Hero() {
 
 function HeroVisual() {
   return (
-    <div style={{ position: "relative", height: 460 }}>
+    <div className="hero-visual" style={{ position: "relative", height: 460 }}>
       <div
         style={{
           position: "absolute",
@@ -102,8 +105,9 @@ function HeroVisual() {
           overflow: "hidden",
         }}
       >
-        <div className="meta" style={{ margin: 0 }}>Thursday, 17 May · 6 threads</div>
+        <div className="meta hero-meta" style={{ margin: 0 }}>Thursday, 17 May · 6 threads</div>
         <h3
+          className="hero-title"
           style={{
             font: "600 26px/1.2 var(--font-serif)",
             letterSpacing: "-0.01em",
@@ -111,9 +115,9 @@ function HeroVisual() {
             marginTop: 6,
           }}
         >
-          A long afternoon
+          A long afternoon<span className="hero-cursor" aria-hidden="true" />
         </h3>
-        <div style={{ font: "400 17px/1.6 var(--font-serif)", color: "var(--fg-1)", marginTop: 16, textWrap: "pretty" }}>
+        <div className="hero-body-a" style={{ font: "400 17px/1.6 var(--font-serif)", color: "var(--fg-1)", marginTop: 16, textWrap: "pretty" }}>
           Thursday, the 17th — a quiet day with a long afternoon. The morning ran on email; by midday you&rsquo;d
           cleared the inbox down to the last few stragglers and pushed the{" "}
           <code
@@ -127,15 +131,15 @@ function HeroVisual() {
             inbox-zero
           </code>{" "}
           branch.
-          <br />
-          <br />
+        </div>
+        <div className="hero-body-b" style={{ font: "400 17px/1.6 var(--font-serif)", color: "var(--fg-1)", marginTop: 12, textWrap: "pretty" }}>
           Sam called in the evening, briefly.{" "}
           <em style={{ color: "var(--color-madder-deep)", fontStyle: "italic" }}>
             You sounded warm when you spoke about the trip.
           </em>{" "}
           Bedtime was 11:38.
         </div>
-        <div style={{ display: "flex", gap: 6, marginTop: 24, flexWrap: "wrap" }}>
+        <div className="hero-tags" style={{ display: "flex", gap: 6, marginTop: 24, flexWrap: "wrap" }}>
           {["github", "calendar", "voice", "email"].map((t, i) => (
             <span key={t} className={"tag" + (i === 0 ? " acc" : "")}>
               {t}
@@ -144,10 +148,11 @@ function HeroVisual() {
         </div>
       </div>
       <div
+        className="hero-badge"
         style={{
           position: "absolute",
-          left: -24,
-          top: 32,
+          left: 225,
+          top: -20,
           background: "var(--color-ink)",
           color: "var(--color-parchment-soft)",
           padding: "10px 14px",
@@ -191,9 +196,9 @@ function HowItWorks() {
         <h2 className="h-section" style={{ marginBottom: 56, maxWidth: 700 }}>
           Three quiet steps. Then it just keeps weaving.
         </h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 32 }}>
+        <div className="wd-reveal-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 32 }}>
           {steps.map((s) => (
-            <div key={s.n}>
+            <div key={s.n} className="wd-reveal">
               <div style={{ font: "var(--type-mono)", fontSize: 14, color: "var(--color-madder)", marginBottom: 14 }}>
                 — {s.n}
               </div>
@@ -228,10 +233,11 @@ function Threads() {
               weaves them into prose, never metrics.
             </p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          <div className="wd-reveal-stagger" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             {threads.map(([n, sub]) => (
               <div
                 key={n}
+                className="wd-reveal"
                 style={{
                   background: "var(--bg-elevated)",
                   border: "1px solid var(--border)",
@@ -280,7 +286,7 @@ function Quote() {
         color: "var(--color-parchment-soft)",
       }}
     >
-      <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+      <div className="wd-reveal" style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
         <Image
           src="/brand/icon-thread.svg"
           alt=""
@@ -318,7 +324,7 @@ function Quote() {
 function CTA() {
   return (
     <section id="cta" style={{ padding: "96px 40px 120px" }}>
-      <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+      <div className="wd-reveal" style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
         <h2 className="h-section" style={{ marginBottom: 18 }}>
           Begin weaving — it&rsquo;s free for thirty days.
         </h2>
@@ -345,6 +351,201 @@ function CTA() {
         </form>
         <p style={{ font: "var(--type-caption)", color: "var(--fg-3)", marginTop: 14 }}>
           No card · cancel anytime · your threads stay yours
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function Pricing() {
+  const plans = [
+    {
+      name: "Notebook",
+      price: "$0",
+      period: "free, forever",
+      tag: null as string | null,
+      tagline: "For the curious. Two threads, fourteen days at a glance.",
+      features: [
+        "Two connected threads",
+        "Fourteen-day archive",
+        "Daily entries · web & mobile",
+        "Voice notes · 30 min / month",
+        "Export anytime",
+      ],
+      cta: "Start a notebook",
+      featured: false,
+    },
+    {
+      name: "Diary",
+      price: "$8",
+      period: "per month",
+      tag: "Most chosen",
+      tagline: "The whole weave. All six threads, every week, every report.",
+      features: [
+        "All six threads",
+        "Unlimited archive & search",
+        "Weekly & monthly reflections",
+        "Voice notes · 5 hrs / month",
+        "Custom goals & gentle nudges",
+        "Custom thread rules",
+      ],
+      cta: "Begin weaving",
+      featured: true,
+    },
+    {
+      name: "Atlas",
+      price: "$18",
+      period: "per month",
+      tag: null as string | null,
+      tagline: "For long memories. Multi-year reflections and unlimited voice.",
+      features: [
+        "Everything in Diary",
+        "Multi-year reports & atlases",
+        "Unlimited voice transcription",
+        "Custom export formats",
+        "Early access to new threads",
+        "Priority support",
+      ],
+      cta: "Choose Atlas",
+      featured: false,
+    },
+  ];
+
+  return (
+    <section id="pricing" style={{ padding: "96px 40px" }}>
+      <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <div className="eyebrow" style={{ marginBottom: 12 }}>Pricing</div>
+          <h2 className="h-section" style={{ maxWidth: 640, margin: "0 auto" }}>
+            One plan per pace of life.
+          </h2>
+          <p className="lede" style={{ margin: "16px auto 0" }}>
+            Start free. Upgrade when your week starts to feel like more than fourteen days. Cancel any time.
+          </p>
+        </div>
+
+        <div className="wd-reveal-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, alignItems: "stretch" }}>
+          {plans.map((p) => (
+            <div
+              key={p.name}
+              className="wd-reveal"
+              style={{
+                background: p.featured ? "var(--color-ink)" : "var(--bg-elevated)",
+                color: p.featured ? "var(--color-parchment-soft)" : "var(--fg-1)",
+                border: "1px solid " + (p.featured ? "var(--color-ink)" : "var(--border)"),
+                borderRadius: "var(--radius-lg)",
+                padding: "32px 28px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 18,
+                boxShadow: p.featured ? "var(--shadow-2)" : "var(--shadow-1)",
+                position: "relative",
+              }}
+            >
+              {p.tag && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: -12,
+                    left: 24,
+                    background: "var(--color-madder)",
+                    color: "var(--color-parchment-soft)",
+                    padding: "4px 10px",
+                    borderRadius: 999,
+                    font: "var(--type-meta)",
+                    textTransform: "uppercase",
+                    letterSpacing: "var(--tracking-meta)",
+                  }}
+                >
+                  {p.tag}
+                </div>
+              )}
+              <div>
+                <div style={{ font: "italic 600 22px/1.2 var(--font-serif)", marginBottom: 12 }}>{p.name}</div>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                  <span style={{ font: "600 44px/1 var(--font-serif)", letterSpacing: "-0.02em" }}>{p.price}</span>
+                  <span
+                    style={{
+                      font: "var(--type-mono)",
+                      fontSize: 13,
+                      color: p.featured ? "var(--color-loom-soft)" : "var(--fg-3)",
+                    }}
+                  >
+                    {p.period}
+                  </span>
+                </div>
+                <p
+                  style={{
+                    font: "italic 400 15px/1.5 var(--font-serif)",
+                    color: p.featured ? "var(--color-loom-soft)" : "var(--fg-2)",
+                    margin: "10px 0 0",
+                    textWrap: "pretty",
+                  }}
+                >
+                  {p.tagline}
+                </p>
+              </div>
+
+              <div
+                style={{
+                  height: 1,
+                  background: p.featured ? "rgba(244,239,230,0.16)" : "var(--border-hairline)",
+                }}
+              />
+
+              <ul
+                style={{
+                  listStyle: "none",
+                  padding: 0,
+                  margin: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 10,
+                  flex: 1,
+                }}
+              >
+                {p.features.map((f) => (
+                  <li
+                    key={f}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "auto 1fr",
+                      gap: 10,
+                      alignItems: "baseline",
+                      font: "400 15px/1.45 var(--font-sans)",
+                      color: p.featured ? "var(--color-parchment-soft)" : "var(--fg-1)",
+                    }}
+                  >
+                    <span style={{ color: "var(--color-madder)", fontWeight: 600 }}>—</span>
+                    <span style={{ minWidth: 0 }}>{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="#cta"
+                className={"btn " + (p.featured ? "btn-primary" : "btn-secondary")}
+                style={{
+                  justifyContent: "center",
+                  padding: "12px 18px",
+                  ...(p.featured
+                    ? {
+                        background: "var(--color-parchment-soft)",
+                        color: "var(--color-ink)",
+                        borderColor: "var(--color-parchment-soft)",
+                        fontWeight: 600,
+                      }
+                    : {}),
+                }}
+              >
+                {p.cta}
+              </a>
+            </div>
+          ))}
+        </div>
+
+        <p style={{ font: "var(--type-caption)", color: "var(--fg-3)", textAlign: "center", marginTop: 28 }}>
+          All plans · end-to-end encrypted · your threads stay yours · cancel any time.
         </p>
       </div>
     </section>
