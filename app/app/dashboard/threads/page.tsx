@@ -1,5 +1,6 @@
-import { THREADS } from "@/lib/mock/threads";
-import type { Thread, ThreadStatus } from "@/lib/mock/types";
+import { requireUser } from "@/lib/supabase/auth";
+import { listThreads } from "@/lib/db/threads";
+import type { Thread, ThreadStatus } from "@/lib/types";
 import { Topbar } from "../_components/shell/Topbar";
 
 function statusDotColor(status: ThreadStatus): string {
@@ -62,12 +63,7 @@ function ThreadRow({ name, status, last, color }: Thread) {
         }}
       >
         <span
-          style={{
-            width: 6,
-            height: 6,
-            borderRadius: 999,
-            background: dot,
-          }}
+          style={{ width: 6, height: 6, borderRadius: 999, background: dot }}
         />
         {status}
       </span>
@@ -81,7 +77,11 @@ function ThreadRow({ name, status, last, color }: Thread) {
   );
 }
 
-export default function ThreadsPage() {
+export default async function ThreadsPage() {
+  await requireUser();
+  const threads = await listThreads();
+  const connectedCount = threads.filter((t) => t.status === "Connected").length;
+
   return (
     <>
       <Topbar crumb="Threads" />
@@ -116,14 +116,14 @@ export default function ThreadsPage() {
             <div>
               <h3 style={{ font: "var(--type-h3)" }}>Your threads</h3>
               <div className="meta" style={{ marginTop: 2 }}>
-                {THREADS.length} connected · woven into every entry
+                {connectedCount} connected · woven into every entry
               </div>
             </div>
             <button className="btn btn-primary" style={{ marginLeft: "auto" }}>
               + Connect
             </button>
           </div>
-          {THREADS.map((t) => (
+          {threads.map((t) => (
             <ThreadRow key={t.name} {...t} />
           ))}
         </div>

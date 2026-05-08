@@ -1,4 +1,4 @@
-import type { StatItem } from "@/lib/mock/types";
+import type { StatItem } from "@/lib/types";
 
 export function StatRow({ label, value, delta, tone }: StatItem) {
   const toneColor =

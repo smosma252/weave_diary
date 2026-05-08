@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import type { ReportSummary } from "@/lib/mock/types";
+import type { ReportSummary } from "@/lib/types";
 
 interface ReportHistoryListProps {
   history: ReportSummary[];

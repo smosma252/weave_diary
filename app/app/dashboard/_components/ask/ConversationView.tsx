@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { ChatMessage as ChatMessageType } from "@/lib/mock/types";
-import { SUGGESTED_PROMPTS } from "@/lib/mock/ask";
+import type { ChatMessage as ChatMessageType } from "@/lib/types";
+import { SUGGESTED_PROMPTS } from "@/lib/ask-prompts";
 import { ChatMessage } from "./ChatMessage";
 
 interface ConversationViewProps {

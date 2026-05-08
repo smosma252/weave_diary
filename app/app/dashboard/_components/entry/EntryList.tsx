@@ -1,5 +1,5 @@
-import { groupEntriesByMonth } from "@/lib/mock/entries";
-import type { Entry } from "@/lib/mock/types";
+import { groupEntriesByMonth } from "@/lib/db/entries";
+import type { Entry } from "@/lib/types";
 import { EntryCard } from "./EntryCard";
 
 interface EntryListProps {

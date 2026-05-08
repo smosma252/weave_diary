@@ -1,14 +1,14 @@
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/supabase/auth";
 import { getEntry } from "@/lib/db/entries";
-import { Topbar } from "../../_components/shell/Topbar";
-import { EntryView } from "../../_components/entry/EntryView";
+import { Topbar } from "../../../_components/shell/Topbar";
+import { EntryEditor } from "../../../_components/entry/EntryEditor";
 
-interface EntryPageProps {
+interface EditEntryPageProps {
   params: Promise<{ entryId: string }>;
 }
 
-export default async function EntryPage({ params }: EntryPageProps) {
+export default async function EditEntryPage({ params }: EditEntryPageProps) {
   await requireUser();
   const { entryId } = await params;
   const entry = await getEntry(entryId);
@@ -16,9 +16,9 @@ export default async function EntryPage({ params }: EntryPageProps) {
 
   return (
     <>
-      <Topbar crumb={`Diary · ${entry.date}`} />
+      <Topbar crumb={`Diary · ${entry.date} · Edit`} />
       <main className="wd-main">
-        <EntryView entry={entry} />
+        <EntryEditor entry={entry} />
       </main>
     </>
   );

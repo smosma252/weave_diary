@@ -1,22 +1,38 @@
 import Link from "next/link";
-import type { Entry } from "@/lib/mock/types";
+import type { Entry } from "@/lib/types";
 
 interface EntryViewProps {
   entry: Entry;
 }
 
 export function EntryView({ entry }: EntryViewProps) {
-  const { date, title, body, threads, voice, minutes } = entry;
+  const { id, date, title, body, threads, voice, minutes } = entry;
 
   return (
     <article style={{ maxWidth: 720, margin: "0 auto" }}>
-      <Link
-        href="/dashboard/diary"
-        className="btn btn-ghost"
-        style={{ marginBottom: 16, padding: "6px 10px" }}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 16,
+        }}
       >
-        ← Back to diary
-      </Link>
+        <Link
+          href="/dashboard/diary"
+          className="btn btn-ghost"
+          style={{ padding: "6px 10px" }}
+        >
+          ← Back to diary
+        </Link>
+        <Link
+          href={`/dashboard/diary/${id}/edit`}
+          className="btn btn-secondary"
+          style={{ padding: "6px 12px", fontSize: 13 }}
+        >
+          Edit
+        </Link>
+      </div>
       <div className="meta" style={{ marginBottom: 8 }}>
         {date} · {threads.length} threads · {minutes} min read
       </div>

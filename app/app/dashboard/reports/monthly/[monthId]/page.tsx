@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-import { getMonthlyReport } from "@/lib/mock/reports";
+import { requireUser } from "@/lib/supabase/auth";
+import { getMonthlyReport } from "@/lib/db/reports";
 import { Topbar } from "../../../_components/shell/Topbar";
 import { MonthlyReport } from "../../../_components/reports/MonthlyReport";
 
@@ -10,12 +11,10 @@ interface MonthlyReportPageProps {
 export default async function MonthlyReportPage({
   params,
 }: MonthlyReportPageProps) {
+  await requireUser();
   const { monthId } = await params;
-  const report = getMonthlyReport(monthId);
-
-  if (!report) {
-    notFound();
-  }
+  const report = await getMonthlyReport(monthId);
+  if (!report) notFound();
 
   return (
     <>

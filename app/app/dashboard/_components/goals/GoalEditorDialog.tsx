@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { Goal } from "@/lib/mock/types";
+import type { Goal } from "@/lib/types";
 
 interface GoalFormData {
   title: string;

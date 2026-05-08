@@ -1,8 +1,12 @@
-import { GOALS } from "@/lib/mock/goals";
+import { requireUser } from "@/lib/supabase/auth";
+import { listGoals } from "@/lib/db/goals";
 import { Topbar } from "../_components/shell/Topbar";
 import { GoalList } from "../_components/goals/GoalList";
 
-export default function GoalsPage() {
+export default async function GoalsPage() {
+  await requireUser();
+  const goals = await listGoals();
+
   return (
     <>
       <Topbar crumb="Goals" />
@@ -25,7 +29,7 @@ export default function GoalsPage() {
         >
           What you&apos;re working towards. WeaveDiary watches quietly and tells you when something starts to slip.
         </p>
-        <GoalList goals={GOALS} />
+        <GoalList goals={goals} />
       </main>
     </>
   );

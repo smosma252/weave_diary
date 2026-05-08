@@ -1,4 +1,4 @@
-import type { MonthlyReport as MonthlyReportType } from "@/lib/mock/types";
+import type { MonthlyReport as MonthlyReportType } from "@/lib/types";
 import { StatRow } from "./StatRow";
 
 interface MonthlyReportProps {

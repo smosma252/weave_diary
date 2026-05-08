@@ -1,4 +1,4 @@
-import type { ChatMessage as ChatMessageType } from "@/lib/mock/types";
+import type { ChatMessage as ChatMessageType } from "@/lib/types";
 
 interface ChatMessageProps {
   message: ChatMessageType;

@@ -1,4 +1,4 @@
-import type { Goal } from "@/lib/mock/types";
+import type { Goal } from "@/lib/types";
 
 interface GoalCardProps {
   goal: Goal;

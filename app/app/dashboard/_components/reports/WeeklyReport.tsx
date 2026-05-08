@@ -1,4 +1,4 @@
-import type { WeeklyReport as WeeklyReportType } from "@/lib/mock/types";
+import type { WeeklyReport as WeeklyReportType } from "@/lib/types";
 import { StatRow } from "./StatRow";
 
 interface WeeklyReportProps {

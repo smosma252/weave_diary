@@ -1,29 +1,46 @@
 "use client";
 
-import { useState } from "react";
-import type { ChatMessage } from "@/lib/mock/types";
-import { makeAssistantMessage, makeUserMessage } from "@/lib/mock/ask";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import type { ChatMessage } from "@/lib/types";
+import { sendUserMessage } from "@/lib/actions/ask";
 import { ConversationView } from "./ConversationView";
 import { AskComposer } from "./AskComposer";
 
-export function AskClient() {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [pending, setPending] = useState(false);
+interface AskClientProps {
+  conversationId: string;
+  initialMessages: ChatMessage[];
+}
+
+export function AskClient({ conversationId, initialMessages }: AskClientProps) {
+  const router = useRouter();
+  const [optimistic, setOptimistic] = useState<ChatMessage | null>(null);
+  const [pending, startTransition] = useTransition();
+
+  // Render: server-truth list, with the in-flight user message appended if any.
+  const messages = optimistic
+    ? [...initialMessages, optimistic]
+    : initialMessages;
 
   function handleSubmit(text: string) {
-    const userMsg = makeUserMessage(text);
-    setMessages((prev) => [...prev, userMsg]);
-    setPending(true);
+    const trimmed = text.trim();
+    if (!trimmed) return;
 
-    setTimeout(() => {
-      const assistantMsg = makeAssistantMessage();
-      setMessages((prev) => [...prev, assistantMsg]);
-      setPending(false);
-    }, 600);
-  }
+    setOptimistic({
+      id: `optimistic-${Date.now()}`,
+      role: "user",
+      content: trimmed,
+      timestamp: new Date().toISOString(),
+    });
 
-  function handlePromptClick(prompt: string) {
-    handleSubmit(prompt);
+    startTransition(async () => {
+      try {
+        await sendUserMessage(conversationId, trimmed);
+        router.refresh();
+      } finally {
+        setOptimistic(null);
+      }
+    });
   }
 
   return (
@@ -38,7 +55,7 @@ export function AskClient() {
         boxSizing: "border-box",
       }}
     >
-      <ConversationView messages={messages} onPromptClick={handlePromptClick} />
+      <ConversationView messages={messages} onPromptClick={handleSubmit} />
       <AskComposer onSubmit={handleSubmit} disabled={pending} />
     </main>
   );

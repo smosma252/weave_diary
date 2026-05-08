@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import type { Goal } from "@/lib/mock/types";
+import { useState, useTransition } from "react";
+import type { Goal } from "@/lib/types";
+import { createGoal, updateGoal } from "@/lib/actions/goals";
 import { GoalCard } from "./GoalCard";
 import { GoalEditorDialog } from "./GoalEditorDialog";
 
@@ -12,6 +13,7 @@ interface GoalListProps {
 export function GoalList({ goals }: GoalListProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingGoal, setEditingGoal] = useState<Goal | null>(null);
+  const [, startTransition] = useTransition();
 
   function openNew() {
     setEditingGoal(null);
@@ -26,6 +28,16 @@ export function GoalList({ goals }: GoalListProps) {
   function handleClose() {
     setDialogOpen(false);
     setEditingGoal(null);
+  }
+
+  function handleSave(data: { title: string; reason: string; status: Goal["status"] }) {
+    startTransition(async () => {
+      if (editingGoal) {
+        await updateGoal(editingGoal.id, data);
+      } else {
+        await createGoal(data);
+      }
+    });
   }
 
   return (
@@ -60,6 +72,7 @@ export function GoalList({ goals }: GoalListProps) {
         open={dialogOpen}
         goal={editingGoal}
         onClose={handleClose}
+        onSave={handleSave}
       />
     </>
   );

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Entry } from "@/lib/mock/types";
+import type { Entry } from "@/lib/types";
 
 interface EntryCardProps {
   entry: Entry;

@@ -1,12 +1,12 @@
-// Pure TypeScript types — zero DOM or React imports.
-// These are the API contract for the future backend and the shared shape
-// for the React Native client.
+// Domain types — the wire shape used by the dashboard. DB rows are mapped onto
+// these by the helpers in lib/db/*.ts so page-level code stays free of snake_case.
 
 export type ThreadStatus = "Connected" | "Syncing" | "Paused";
 
 export interface Entry {
   id: string;
-  date: string;
+  date: string;            // display string e.g. "Thu · 17 May"
+  isoDate: string;         // "YYYY-MM-DD" — used for keying and edit links
   title: string;
   excerpt: string;
   threads: string[];
