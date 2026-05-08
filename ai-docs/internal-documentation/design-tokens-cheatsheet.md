@@ -6,7 +6,7 @@ All tokens are CSS custom properties defined in `app/app/globals.css`. Reference
 
 ## Surfaces (backgrounds)
 
-| Token | Value | When to use |
+| Token | Value | When to use | 
 |---|---|---|
 | `--bg` | `#F4EFE6` (parchment) | Default page/app background |
 | `--bg-elevated` | `#FAF6EE` (parchment-soft) | Cards, sidebar, floating panels |

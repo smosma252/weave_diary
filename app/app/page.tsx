@@ -35,10 +35,10 @@ function NavBar() {
       <a href="#threads" style={navLink}>Threads</a>
       <a href="#demo" style={navLink}>Try it</a>
       <a href="#pricing" style={navLink}>Pricing</a>
-      <Link href="/dashboard" className="btn btn-secondary" style={{ marginLeft: 8 }}>
+      <Link href="/sign-in" className="btn btn-secondary" style={{ marginLeft: 8 }}>
         Sign in
       </Link>
-      <a href="#cta" className="btn btn-primary">Begin weaving</a>
+      <Link href="/sign-up" className="btn btn-primary">Begin weaving</Link>
     </nav>
   );
 }
@@ -331,8 +331,13 @@ function CTA() {
         <p className="lede" style={{ margin: "0 auto 32px" }}>
           Connect a thread or two, leave a voice note tonight, and read your first entry tomorrow morning.
         </p>
-        <form style={{ display: "flex", gap: 8, maxWidth: 460, margin: "0 auto" }}>
+        <form
+          action="/sign-up"
+          method="get"
+          style={{ display: "flex", gap: 8, maxWidth: 460, margin: "0 auto" }}
+        >
           <input
+            name="email"
             type="email"
             placeholder="you@somewhere.com"
             style={{
